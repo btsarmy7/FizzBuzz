@@ -5,7 +5,7 @@ const _ = require('lodash')
 
 let factorial = (n) =>{
     if(n <= 1){
-        return 1 * n
+        return 1 
     }else
     return n * factorial(n - 1)
 }
@@ -20,34 +20,42 @@ console.log(factorial(5)) // 120
 
 let solve = (array, x) =>{
     
-   if(array.length < 1){
-        return false
-   }else{
-    for(let i = 0; i < array.length; i++){
-        if(array[i] % x === 0){
-            return true;
-        }
-    }
-   // if(solve(summed(array[0], array)) % x === 0) {
-           // return true
-   // }else{
-        let prev = array[0]
-        array = summed(-prev, array)
-        array.shift()
-        return solve(summed(array[0], array), x)
-   // }
+    if(checkArray(x, array)) {
+           return true
+    }else{      
+        while(array.length > 0){
+            let prev = array[0] 
+            array.shift()
+            array = summed(prev, array)
+            if(checkArray(x, array)){
+                return true
+            }
+            summed(-prev, array)
+        } return false
     }
 
 }
 
 let summed = (a, arr) => {
-    for(let i = 1; i < arr.length; i++){
+    for(let i = 0; i < arr.length; i++){
         arr[i] = arr[i] + a    
     }
     return arr
 }
 
-let t = [1,2,3,4,5]
+let checkArray = (a, arr) =>{
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i] % a === 0){
+            return true;
+        }
+    } return false
+}
 
-//console.log(summed(t[0], t))
-console.log(solve(t, 9))
+let a = [1,2,3,4,5]
+console.log(solve(a, 7))
+let b = [1,2,3,4,5]
+console.log(solve(b, 9))
+let c = [1,2,3,4,5]
+console.log(solve(c, 11))
+let d = [1,2,3,4,5]
+console.log(solve(d, 9))
